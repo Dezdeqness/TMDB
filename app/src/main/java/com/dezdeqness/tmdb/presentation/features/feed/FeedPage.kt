@@ -1,20 +1,72 @@
 package com.dezdeqness.tmdb.presentation.features.feed
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.dezdeqness.tmdb.presentation.features.shared.ui.ErrorContent
+import com.dezdeqness.tmdb.presentation.features.shared.ui.ScrollContent
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FeedPage(
     modifier: Modifier = Modifier,
+    viewModel: FeedViewModel = hiltViewModel(),
 ) {
+
+    val state = viewModel.feedState.collectAsState()
+
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.value.isPullDownVisible,
+        onRefresh = {
+            viewModel.onPullDownRefresh()
+        },
+    )
+
     Box(
-        contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize(),
     ) {
-        Text("FeedPage")
+
+        if (state.value.isInitialLoadingVisible) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        } else {
+
+            if (state.value.isErrorVisible) {
+                ErrorContent(
+                    modifier = Modifier.pullRefresh(pullRefreshState)
+                )
+            } else {
+                ScrollContent(
+                    list = state.value.uiItems,
+                    onLoadMore = viewModel::onLoadMore,
+                    onChangeFavouriteButtonClicked = viewModel::onChangeFavouriteButtonClicked,
+                    onShareButtonClicked = viewModel::onShareButtonClicked,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pullRefresh(pullRefreshState)
+                        .background(Color(0xFFF6F6F6)),
+                )
+            }
+
+            PullRefreshIndicator(
+                refreshing = state.value.isPullDownVisible,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter),
+            )
+        }
+
     }
+
 }
