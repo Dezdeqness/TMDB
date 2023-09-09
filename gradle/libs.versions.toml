@@ -16,6 +16,7 @@ retrofit = "2.9.0"
 okhttp = "4.7.2"
 room = "2.4.3"
 dagger = "2.44"
+hiltNavigation = "1.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -32,6 +33,7 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+material = { group = "androidx.compose.material", name = "material" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 corutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 corutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -44,6 +46,7 @@ room = { module = "androidx.room:room-runtime", version.ref = "room" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
