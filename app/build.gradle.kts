@@ -3,6 +3,7 @@ plugins {
     kotlin("kapt")
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
@@ -20,11 +21,19 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "BASE_API_URL", "\"https://api.themoviedb.org/3/\"")
+        buildConfigField("String", "APIKEY", "\"ef093f135a41bd8b9427ca7261e547cf\"")
+
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+        }
+
+        release {
+            isMinifyEnabled = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -32,14 +41,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -47,8 +57,10 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/gradle/incremental.annotation.processors"
         }
     }
+
 }
 
 dependencies {
@@ -64,6 +76,25 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+
+    implementation(libs.coil)
+
+    implementation(libs.corutines)
+    implementation(libs.corutines.android)
+
+    implementation(libs.compose.navigation)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofitMoshi)
+
+    implementation(libs.okhttp)
+    implementation(libs.okhttpLogInterceptor)
+
+    implementation(libs.room)
+    kapt(libs.roomCompiler)
+
+    implementation(libs.hiltAndroid)
+    kapt(libs.hiltCompiler)
 
     testImplementation(libs.junit)
 

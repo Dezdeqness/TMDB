@@ -1,4 +1,4 @@
-package com.dezdeqness.tmdb
+package com.dezdeqness.tmdb.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    MovieApp()
                 }
             }
         }
