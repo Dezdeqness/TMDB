@@ -99,8 +99,16 @@ dependencies {
     kapt(libs.hiltCompiler)
     implementation(libs.hilt.navigation.compose)
 
-    testImplementation(libs.junit)
-
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    testImplementation(libs.junitCore)
+    testImplementation(libs.junitApi)
+    testImplementation(libs.junitLauncher)
+    testRuntimeOnly(libs.junitEngine)
+    testImplementation(libs.junitParams)
+    testImplementation(libs.coroutinesTest)
+
+    testImplementation(libs.mockitoJunit)
+    testImplementation(libs.mockitoInline)
+    testImplementation(libs.mockitoKotlin)
 }
