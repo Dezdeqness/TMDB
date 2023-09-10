@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
@@ -33,6 +34,7 @@ fun MovieTile(
     modifier: Modifier = Modifier,
 ) {
     Card(
+        shape = RoundedCornerShape(4.dp),
         elevation = cardElevation(3.dp),
         colors = cardColors(
             containerColor = TmdbTheme.colors.backgroundLight,
