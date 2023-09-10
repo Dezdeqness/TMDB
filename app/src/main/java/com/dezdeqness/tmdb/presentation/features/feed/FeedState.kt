@@ -8,4 +8,5 @@ data class FeedState(
     val isPullDownVisible: Boolean = false,
     val isErrorVisible: Boolean = false,
     val hasNextPage: Boolean = false,
+    val events: List<FeedEvent> = listOf(),
 )

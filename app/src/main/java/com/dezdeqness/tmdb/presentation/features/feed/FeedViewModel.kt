@@ -63,6 +63,12 @@ class FeedViewModel @Inject constructor(
         }
     }
 
+    fun onEventConsumed(event: FeedEvent) {
+        val value = _feedState.value
+        _feedState.value = value.copy(
+            events = value.events.toMutableList() - event
+        )
+    }
 
     fun onLoadMore() {
         currentIndexPage++
@@ -140,19 +146,29 @@ class FeedViewModel @Inject constructor(
     }
 
     private fun handleError(exception: Throwable) {
-        println(exception.toString())
         launchOnMain {
+            val isErrorVisible = _feedState.value.uiItems.isEmpty()
             _feedState.update {
                 _feedState.value.copy(
                     isInitialLoadingVisible = false,
                     isPullDownVisible = false,
-                    isErrorVisible = true,
+                    isErrorVisible = isErrorVisible,
                 )
+            }
+            if (isErrorVisible.not()) {
+                handleErrorEvent(exception)
             }
         }
     }
 
-
+    private fun handleErrorEvent(exception: Throwable) {
+        _feedState.value =
+            _feedState.value.copy(
+                events = _feedState.value.events + ErrorEvent(
+                    errorMessage = exception.message.toString()
+                )
+            )
+    }
     companion object {
         private const val INITIAL_INDEX = 1
     }

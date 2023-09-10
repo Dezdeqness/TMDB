@@ -173,7 +173,7 @@ class FeedViewModelTest {
         }
 
     @Test
-    fun `WHEN pull down is failure SHOULD show error`() =
+    fun `WHEN pull down is failure SHOULD show error message`() =
         runTest {
             val initialPage = 1
             val movieItems = listOf<MovieEntity>(
@@ -204,9 +204,10 @@ class FeedViewModelTest {
             val uiState = viewModel.feedState.value
 
             assertAll(
-                { assertTrue(uiState.isErrorVisible) },
+                { assertFalse(uiState.isErrorVisible) },
                 { assertFalse(uiState.isPullDownVisible) },
                 { assertFalse(uiState.isInitialLoadingVisible) },
+                { assertTrue(uiState.events.filterIsInstance<ErrorEvent>().size == 1) },
             )
 
         }
@@ -272,7 +273,7 @@ class FeedViewModelTest {
         }
 
     @Test
-    fun `WHEN load more is failure SHOULD show error`() =
+    fun `WHEN load more is failure SHOULD show error message`() =
         runTest {
             val initialPage = 1
             val movieItems = listOf<MovieEntity>(
@@ -305,9 +306,10 @@ class FeedViewModelTest {
             val uiState = viewModel.feedState.value
 
             assertAll(
-                { assertTrue(uiState.isErrorVisible) },
+                { assertFalse(uiState.isErrorVisible) },
                 { assertFalse(uiState.isPullDownVisible) },
                 { assertFalse(uiState.isInitialLoadingVisible) },
+                { assertTrue(uiState.events.filterIsInstance<ErrorEvent>().size == 1) },
             )
 
         }
