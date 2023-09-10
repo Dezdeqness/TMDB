@@ -4,6 +4,7 @@ import com.dezdeqness.tmdb.domain.model.MovieEntity
 import com.dezdeqness.tmdb.domain.model.MoviePageEntity
 import com.dezdeqness.tmdb.domain.repository.FavouriteRepository
 import com.dezdeqness.tmdb.domain.repository.MovieRepository
+import com.dezdeqness.tmdb.presentation.features.shared.action.ActionReducer
 import com.dezdeqness.tmdb.presentation.features.shared.composer.UiModelComposer
 import com.dezdeqness.tmdb.presentation.features.shared.model.MovieUiModel
 import com.dezdeqness.tmdb.utils.TestCoroutineDispatcherProvider
@@ -43,10 +44,12 @@ class FeedViewModelTest {
     @Mock
     private lateinit var favouriteRepository: FavouriteRepository
 
+    @Mock
+    private lateinit var actionReducer: ActionReducer
+
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
-        `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
     }
 
     @AfterEach
@@ -71,6 +74,7 @@ class FeedViewModelTest {
                 mock(), mock(), mock(), mock(), mock(), mock(),
             )
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(successResult)
             `when`(uiModelComposer.composePage(movieItems, true)).thenReturn(uiItems)
 
@@ -94,6 +98,7 @@ class FeedViewModelTest {
 
             val errorResult = Result.failure<MoviePageEntity>(Exception())
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(errorResult)
 
             val viewModel = createViewModel()
@@ -126,6 +131,7 @@ class FeedViewModelTest {
                 mock(), mock(), mock(), mock(), mock(), mock(),
             )
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(successResult)
             `when`(uiModelComposer.composePage(movieItems, true)).thenReturn(uiItems)
 
@@ -183,6 +189,7 @@ class FeedViewModelTest {
                 mock(), mock(), mock(), mock(), mock(), mock(),
             )
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(successResult)
             `when`(uiModelComposer.composePage(movieItems, true)).thenReturn(uiItems)
 
@@ -221,6 +228,7 @@ class FeedViewModelTest {
                 mock(), mock(), mock(), mock(), mock(), mock(),
             )
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(successResult)
             `when`(uiModelComposer.composePage(movieItems, true)).thenReturn(uiItems)
 
@@ -280,6 +288,7 @@ class FeedViewModelTest {
                 mock(), mock(), mock(), mock(), mock(), mock(),
             )
 
+            `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
             `when`(movieRepository.getMoviePageRemote(initialPage)).thenReturn(successResult)
             `when`(uiModelComposer.composePage(movieItems, true)).thenReturn(uiItems)
 
@@ -308,6 +317,7 @@ class FeedViewModelTest {
         movieRepository = movieRepository,
         uiModelComposer = uiModelComposer,
         favouriteRepository = favouriteRepository,
+        actionReducer = actionReducer,
         coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
     )
 }

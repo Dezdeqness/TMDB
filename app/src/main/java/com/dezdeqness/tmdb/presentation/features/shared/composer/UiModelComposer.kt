@@ -13,7 +13,7 @@ import javax.inject.Inject
 class UiModelComposer @Inject constructor(
     private val favouriteRepository: FavouriteRepository,
 ) {
-    private val formatter: SimpleDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+    private val formatter: SimpleDateFormat = SimpleDateFormat("MMM yyyy", Locale.ENGLISH)
 
     fun composePage(
         items: List<MovieEntity>,
