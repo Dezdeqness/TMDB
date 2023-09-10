@@ -46,6 +46,7 @@ okhttpLogInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", ve
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 room = { module = "androidx.room:room-runtime", version.ref = "room" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
