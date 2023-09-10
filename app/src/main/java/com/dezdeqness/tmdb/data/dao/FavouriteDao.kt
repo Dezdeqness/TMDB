@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavouriteDao {
 
-    @Query("SELECT * FROM favourites")
+    @Query("SELECT * FROM favourites ORDER BY release_timestamp DESC")
     fun getAll(): Flow<List<FavouriteMovieLocal>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

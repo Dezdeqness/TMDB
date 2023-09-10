@@ -10,6 +10,7 @@ interface FavouritesMovieLocalDatasource {
     fun saveFavourite(item: MovieEntity)
 
     fun deleteFavourite(item: MovieEntity)
+
     fun isAdded(id: Long): Boolean
 
 }
