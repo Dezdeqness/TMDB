@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TMDB</string>
+
+    <string name="action_remove_title">REMOVE</string>
+    <string name="action_like_title">LIKE</string>
+    <string name="action_share_title">SHARE</string>
+
+
 </resources>

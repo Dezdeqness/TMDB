@@ -8,6 +8,7 @@ data class MovieUiModel(
     val description: String,
     val imageUrl: String,
     val score: String,
+    val isFavourite: Boolean,
 ) : UiItem() {
     override fun id() = id
 }

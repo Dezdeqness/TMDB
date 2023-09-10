@@ -2,6 +2,7 @@ package com.dezdeqness.tmdb.presentation.features.shared.composer
 
 import com.dezdeqness.tmdb.core.UiItem
 import com.dezdeqness.tmdb.domain.model.MovieEntity
+import com.dezdeqness.tmdb.domain.repository.FavouriteRepository
 import com.dezdeqness.tmdb.presentation.features.shared.model.HeaderUiModel
 import com.dezdeqness.tmdb.presentation.features.shared.model.LoadMoreUiModel
 import com.dezdeqness.tmdb.presentation.features.shared.model.MovieUiModel
@@ -9,12 +10,14 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
 
-class UiModelComposer @Inject constructor() {
+class UiModelComposer @Inject constructor(
+    private val favouriteRepository: FavouriteRepository,
+) {
     private val formatter: SimpleDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
 
     fun composePage(
         items: List<MovieEntity>,
-        hasNextPage: Boolean,
+        hasNextPage: Boolean = false,
     ): List<UiItem> {
 
         val composeList = mutableListOf<UiItem>()
@@ -39,6 +42,7 @@ class UiModelComposer @Inject constructor() {
                     description = item.overview,
                     imageUrl = item.imageUrl,
                     score = item.voteAverage.toString(),
+                    isFavourite = favouriteRepository.isAdded(item.id),
                 ),
             )
 

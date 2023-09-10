@@ -17,4 +17,6 @@ class FavouriteRepositoryImpl(
         favouritesMovieLocalDatasource.deleteFavourite(item)
     }
 
+    override fun isAdded(id: Long) = favouritesMovieLocalDatasource.isAdded(id)
+
 }

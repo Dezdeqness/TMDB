@@ -2,6 +2,7 @@ package com.dezdeqness.tmdb.presentation.features.feed
 
 import com.dezdeqness.tmdb.domain.model.MovieEntity
 import com.dezdeqness.tmdb.domain.model.MoviePageEntity
+import com.dezdeqness.tmdb.domain.repository.FavouriteRepository
 import com.dezdeqness.tmdb.domain.repository.MovieRepository
 import com.dezdeqness.tmdb.presentation.features.shared.composer.UiModelComposer
 import com.dezdeqness.tmdb.presentation.features.shared.model.MovieUiModel
@@ -10,6 +11,7 @@ import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -38,9 +40,13 @@ class FeedViewModelTest {
     @Mock
     private lateinit var uiModelComposer: UiModelComposer
 
+    @Mock
+    private lateinit var favouriteRepository: FavouriteRepository
+
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
+        `when`(favouriteRepository.getFavourites()).thenReturn(flowOf())
     }
 
     @AfterEach
@@ -301,6 +307,7 @@ class FeedViewModelTest {
     private fun createViewModel() = FeedViewModel(
         movieRepository = movieRepository,
         uiModelComposer = uiModelComposer,
+        favouriteRepository = favouriteRepository,
         coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
     )
 }

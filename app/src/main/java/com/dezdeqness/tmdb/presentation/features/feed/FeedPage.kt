@@ -37,34 +37,43 @@ fun FeedPage(
         modifier = modifier.fillMaxSize(),
     ) {
 
-        if (state.value.isInitialLoadingVisible) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-            )
-        } else {
+        val currentState = state.value
 
-            if (state.value.isErrorVisible) {
+        when {
+            currentState.isInitialLoadingVisible -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+
+            currentState.isErrorVisible -> {
                 ErrorContent(
                     modifier = Modifier.pullRefresh(pullRefreshState)
                 )
-            } else {
+
+                PullRefreshIndicator(
+                    refreshing = currentState.isPullDownVisible,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                )
+            }
+
+            else -> {
                 ScrollContent(
-                    list = state.value.uiItems,
+                    list = currentState.uiItems,
                     onLoadMore = viewModel::onLoadMore,
-                    onChangeFavouriteButtonClicked = viewModel::onChangeFavouriteButtonClicked,
-                    onShareButtonClicked = viewModel::onShareButtonClicked,
+                    onActionPreformed = viewModel::onActionReceive,
                     modifier = Modifier
                         .fillMaxSize()
                         .pullRefresh(pullRefreshState)
                         .background(Color(0xFFF6F6F6)),
                 )
+                PullRefreshIndicator(
+                    refreshing = currentState.isPullDownVisible,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                )
             }
-
-            PullRefreshIndicator(
-                refreshing = state.value.isPullDownVisible,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter),
-            )
         }
 
     }

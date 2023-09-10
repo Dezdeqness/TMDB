@@ -94,6 +94,7 @@ dependencies {
 
     implementation(libs.room)
     kapt(libs.roomCompiler)
+    implementation(libs.roomKtx)
 
     implementation(libs.hiltAndroid)
     kapt(libs.hiltCompiler)

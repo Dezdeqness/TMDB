@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.tmdb.core.UiItem
+import com.dezdeqness.tmdb.presentation.features.shared.action.Action
 import com.dezdeqness.tmdb.presentation.features.shared.model.HeaderUiModel
 import com.dezdeqness.tmdb.presentation.features.shared.model.LoadMoreUiModel
 import com.dezdeqness.tmdb.presentation.features.shared.model.MovieUiModel
@@ -19,24 +20,25 @@ private const val LOAD_FACTOR = 0.75f
 
 @Composable
 fun ScrollContent(
-    list: List<UiItem>,
-    onLoadMore: () -> Unit,
-    onChangeFavouriteButtonClicked: (Long) -> Unit,
-    onShareButtonClicked: (Long) -> Unit,
     modifier: Modifier = Modifier,
+    list: List<UiItem>,
+    onActionPreformed: (Action) -> Unit,
+    onLoadMore: (() -> Unit)? = null,
 ) {
     val lazyColumnListState = rememberLazyListState()
 
-    val shouldStartPaginate = remember {
-        derivedStateOf {
-            (lazyColumnListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: 0) >= (lazyColumnListState.layoutInfo.totalItemsCount * LOAD_FACTOR)
+    if (onLoadMore != null) {
+        val shouldStartPaginate = remember {
+            derivedStateOf {
+                (lazyColumnListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                    ?: 0) >= (lazyColumnListState.layoutInfo.totalItemsCount * LOAD_FACTOR)
+            }
         }
-    }
 
-    LaunchedEffect(shouldStartPaginate.value) {
-        if (shouldStartPaginate.value) {
-            onLoadMore()
+        LaunchedEffect(shouldStartPaginate.value) {
+            if (shouldStartPaginate.value) {
+                onLoadMore.invoke()
+            }
         }
     }
 
@@ -53,8 +55,7 @@ fun ScrollContent(
                 is MovieUiModel -> {
                     MovieTile(
                         movieUiModel = item,
-                        onChangeFavouriteButtonClicked = onChangeFavouriteButtonClicked,
-                        onShareButtonClicked = onShareButtonClicked,
+                        onActionPreformed = onActionPreformed,
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .padding(bottom = 8.dp)

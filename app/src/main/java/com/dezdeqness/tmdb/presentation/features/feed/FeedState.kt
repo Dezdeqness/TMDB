@@ -7,4 +7,5 @@ data class FeedState(
     val isInitialLoadingVisible: Boolean = false,
     val isPullDownVisible: Boolean = false,
     val isErrorVisible: Boolean = false,
+    val hasNextPage: Boolean = false,
 )

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.dezdeqness.tmdb.R
+import com.dezdeqness.tmdb.presentation.features.shared.action.Action
 import com.dezdeqness.tmdb.presentation.features.shared.model.MovieUiModel
 import com.dezdeqness.tmdb.ui.theme.TMDBTheme
 import java.util.Locale
@@ -30,8 +33,7 @@ import java.util.Locale
 @Composable
 fun MovieTile(
     movieUiModel: MovieUiModel,
-    onChangeFavouriteButtonClicked: (Long) -> Unit,
-    onShareButtonClicked: (Long) -> Unit,
+    onActionPreformed: (Action) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -108,11 +110,18 @@ fun MovieTile(
                 Row {
                     TextButton(
                         onClick = {
-                            onChangeFavouriteButtonClicked(movieUiModel.id)
+                            if (movieUiModel.isFavourite) {
+                                onActionPreformed(Action.RemoveFavourite(movieUiModel.id))
+                            } else {
+                                onActionPreformed(Action.AddFavourite(movieUiModel.id))
+                            }
                         },
                     ) {
+
+                        val resId =
+                            if (movieUiModel.isFavourite) R.string.action_remove_title else R.string.action_like_title
                         Text(
-                            text = "Like".toUpperCase(Locale.getDefault()),
+                            text = stringResource(id = resId),
                             // Button
                             style = TextStyle(
                                 fontSize = 14.sp,
@@ -129,12 +138,12 @@ fun MovieTile(
 
                     TextButton(
                         onClick = {
-                            onShareButtonClicked(movieUiModel.id)
+                            onActionPreformed(Action.Share(movieUiModel.id))
                         },
                     ) {
 
                         Text(
-                            text = "Share".toUpperCase(Locale.getDefault()),
+                            text = stringResource(id = R.string.action_share_title),
                             // Button
                             style = TextStyle(
                                 fontSize = 14.sp,
@@ -164,9 +173,9 @@ fun MovieTilePreview() {
                 description = "American neo-noir black comedy crime film written and directed by Quentin Tarantino",
                 imageUrl = "https://image.tmdb.org/t/p/w780/8pjWz2lt29KyVGoq1mXYu6Br7dE.jpg",
                 score = "7.5",
+                isFavourite = true,
             ),
-            onChangeFavouriteButtonClicked = {},
-            onShareButtonClicked = {},
+            onActionPreformed = {},
             modifier = Modifier.padding(16.dp)
         )
     }
