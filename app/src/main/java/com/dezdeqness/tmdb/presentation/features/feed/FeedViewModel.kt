@@ -43,7 +43,7 @@ class FeedViewModel @Inject constructor(
                         hasNextPage = page.currentPage < page.totalPages,
                     )
                     val filteredItems = _feedState.value.uiItems.filterNot { it == LoadMoreUiModel }
-                    handleSuccess(filteredItems + loadMoreItems)
+                    handleSuccess((filteredItems + loadMoreItems).distinct())
                 }
                 .onFailure { exception ->
                     handleError(exception)
