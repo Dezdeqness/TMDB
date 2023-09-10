@@ -12,10 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dezdeqness.tmdb.presentation.features.shared.ui.ErrorContent
 import com.dezdeqness.tmdb.presentation.features.shared.ui.ScrollContent
+import com.dezdeqness.tmdb.ui.theme.TmdbTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -66,7 +66,7 @@ fun FeedPage(
                     modifier = Modifier
                         .fillMaxSize()
                         .pullRefresh(pullRefreshState)
-                        .background(Color(0xFFF6F6F6)),
+                        .background(TmdbTheme.colors.backgroundLight),
                 )
                 PullRefreshIndicator(
                     refreshing = currentState.isPullDownVisible,

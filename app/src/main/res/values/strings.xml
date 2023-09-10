@@ -5,5 +5,9 @@
     <string name="action_like_title">LIKE</string>
     <string name="action_share_title">SHARE</string>
 
+    <string name="tab_films_title">FILMS</string>
+    <string name="tab_favourites_title">FAVOURITES</string>
 
+    <string name="general_error_message">Something went wrong</string>
+    <string name="general_empty_message">No items currently saved</string>
 </resources>
