@@ -19,7 +19,7 @@ fun MovieApp(
 
     NavHost(
         navController = navController,
-        startDestination = LOGIN_ROUTE,
+        startDestination = HOME_ROUTE,
         modifier = modifier.fillMaxSize(),
     ) {
         composable(LOGIN_ROUTE) {
